@@ -1,0 +1,159 @@
+
+<%- include('partials/header') %>
+  <!-- inner-banner -->
+<!-- <section class="inner-banner" id="home">
+	<div class="inner-layer">
+	<img class="my-images" src="./assets/image/img-2.jpg">
+		<div class="container">
+		</div>
+	</div>
+</section> -->
+<!-- //inner-banner End -->
+
+
+  <!-- ======= Hero inner Section ======= -->
+  <section id="hero-inner" class="d-flex align-items-center">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
+         
+             <h1> Contact us</h1>
+              <!--
+          <h2></h2>
+          <div class="d-flex justify-content-center justify-content-lg-start">
+            <a href="#clients" class="btn-get-started scrollto">Get Started</a>
+            <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="glightbox btn-watch-video"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
+          </div> -->
+        </div>
+        <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
+          <img src="/img/hero-img.png" class="img-fluid animated" alt="">
+        </div>
+      </div>
+    </div>
+
+  </section><!-- End Hero -->
+
+
+      <!-- ======= more link Section ======= -->
+      <section id="clients" class="clients section-bg">
+        <div class="container-fluid">
+          <div class="row bg-gray wow sliderInDown">
+          <div class="row" data-aos="zoom-in">
+            <div class= "col-md-4"><div class="icon-text"><i class="fa fa-globe" aria-hidden="true"></i><a class="text-danger" href="#">Adventist World  Center</a></div> </div>
+            <div class= "col-md-4 bg-danger "><div class="icon-text"><i class="fa fa-star" aria-hidden="true"></i><a  class="text-white" href="#">Operation Depopulate Hell (ODH)</a></div> </div>
+            <div class= "col-md-4"><div class="icon-text"><i class="fa fa-book" aria-hidden="true"></i><a class="text-danger" href="#"> Visit SHASA Faith Library</a></div> </div>
+    
+  
+          </div>
+        </div>
+        </div>
+      </section><!-- End  Section -->
+
+
+
+
+
+
+
+
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+        <div class="container" data-aos="fade-up">
+  
+          <div class="section-title">
+            <h2>Contact</h2>
+            <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+          </div>
+  
+          <div class="row">
+  
+            <div class="col-lg-5 d-flex align-items-stretch">
+              <div class="info">
+                <div class="address">
+                  <i class="bi bi-geo-alt"></i>
+                  <h4>Location:</h4>
+                  <p>Southern Highlands Province, Mendi</p>
+                </div>
+  
+                <div class="email">
+                  <i class="bi bi-envelope"></i>
+                  <h4>Email:</h4>
+                  <p>agatzenn146@gmail.com</p>
+                </div>
+  
+                <div class="phone">
+                  <i class="bi bi-phone"></i>
+                  <h4>Call:</h4>
+                  <p>+675 72504628</p>
+                </div>
+                <div class="container mt-3">
+  <h2>SHASA Ministry Head Quarter</h2>
+  <iframe
+  
+    src="https://www.google.com/maps?q=-6.133538005651548, 143.65888983680742&z=15&output=embed"
+    width="100%"
+    height="290"
+    style="border:0; border-radius:10px;"
+    allowfullscreen=""
+    loading="lazy">
+  </iframe>
+</div>
+
+                <!--<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.3995872054825!2d6.714778874478867!3d6.210912726717974!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1043f37e0b96b43f%3A0x3f9d2739e832de00!2sPower%20Arena%2C%20Salvation%20Gospel%20Mission%20International!5e0!3m2!1sen!2sus!4v1685191980727!5m2!1sen!2sus" width="100%" height="290px" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>-->
+             
+              </div>
+  
+            </div>
+
+            <% if (success_msg) { %>
+  <div class="alert alert-success"><%= success_msg %></div>
+<% } %>
+<% if (error_msg) { %>
+  <div class="alert alert-danger"><%= error_msg %></div>
+<% } %>
+
+  
+            <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
+             <form action="/contact" method="POST" class="php-email-form">
+  <div class="row">
+    <div class="form-group col-md-6">
+      <label for="name">Your Name</label>
+      <input type="text" name="name" class="form-control" id="name" required>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="email">Your Email</label>
+      <input type="email" class="form-control" name="email" id="email" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="subject">Subject</label>
+    <input type="text" class="form-control" name="subject" id="subject" required>
+  </div>
+  <div class="form-group">
+    <label for="message">Message</label>
+    <textarea class="form-control" name="message" rows="10" required></textarea>
+  </div>
+  <div class="my-3">
+    <div class="loading">Loading</div>
+    <div class="error-message"></div>
+    <div class="sent-message">Your message has been sent. Thank you!</div>
+  </div>
+  <div class="text-center">
+    <button type="submit">Send Message</button>
+  </div>
+</form>
+
+
+            </div>
+  
+          </div>
+  
+        </div>
+      </section><!-- End Contact Section -->
+  
+
+
+
+      <%- include('partials/footer') %>

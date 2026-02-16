@@ -1,0 +1,179 @@
+
+<%- include('partials/header') %>
+
+
+<link href="/scss/style.css" rel="stylesheet">
+
+  <!-- inner-banner -->
+<!-- <section class="inner-banner" id="home">
+	<div class="inner-layer">
+	<img class="my-images" src="./assets/image/img-2.jpg">
+		<div class="container">
+		</div>
+	</div>
+</section> -->
+<!-- //inner-banner End -->
+
+
+  <!-- ======= Hero inner Section ======= -->
+  <section id="hero-inner" class="d-flex align-items-center">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
+         
+             <h1> Register</h1>
+              <!--
+          <h2></h2>
+          <div class="d-flex justify-content-center justify-content-lg-start">
+            <a href="#clients" class="btn-get-started scrollto">Get Started</a>
+            <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="glightbox btn-watch-video"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
+          </div> -->
+        </div>
+        <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
+          <img src="/img/hero-img.png" class="img-fluid animated" alt="">
+        </div>
+      </div>
+    </div>
+
+  </section><!-- End Hero -->
+
+
+      <!-- ======= more link Section ======= -->
+      <section id="clients" class="clients section-bg">
+        <div class="container-fluid">
+          <div class="row bg-gray wow sliderInDown">
+          <div class="row" data-aos="zoom-in">
+            <div class= "col-md-4"><div class="icon-text"><i class="fa fa-globe" aria-hidden="true"></i><a class="text-danger" href="#">Adventist World Center</a></div> </div>
+            <div class= "col-md-4 bg-danger "><div class="icon-text"><i class="fa fa-star" aria-hidden="true"></i><a  class="text-white" href="#">Operation Depopulate Hell (ODH)</a></div> </div>
+            <div class= "col-md-4"><div class="icon-text"><i class="fa fa-book" aria-hidden="true"></i><a class="text-danger" href="#"> Visit SHASA Faith Library</a></div> </div>
+    
+  
+          </div>
+        </div>
+        </div>
+      </section><!-- End  Section -->
+
+
+
+<!-- type writer for tight and offering -->
+
+<h2 class="h1-txt wow fadeInLeft ml-lg-3 ml-sm-2">Please follow the Link To Pay:<span class="txt-type" data-wait="3000" data-words='["Tight", "Offering"]' > </span> <br>
+    <a class="btn btn-sm bg-danger text-light  mt-3 wow slideInLeft">Pay Here </a>
+    </h2>
+  
+ 
+
+
+
+
+
+
+
+    <div class="form">
+      
+      <ul class="tab-group">
+        <li class="tab active"><a href="#signup">Sign Up</a></li>
+        <li class="tab"><a href="#login">Log In</a></li>
+      </ul>
+      
+      <div class="tab-content">
+        <div id="signup">   
+          <h1>Sign Up Here</h1>
+          
+          <form action="/register" method="post">
+          
+          <div class="top-row">
+            <div class="field-wrap">
+              <label>
+                First Name<span class="req">*</span>
+              </label>
+              <input type="text" required autocomplete="off" />
+            </div>
+        
+            <div class="field-wrap">
+              <label>
+                Last Name<span class="req">*</span>
+              </label>
+              <input type="text"required autocomplete="off"/>
+            </div>
+          </div>
+  
+          <div class="field-wrap">
+            <label>
+              Email Address<span class="req">*</span>
+            </label>
+            <input type="email"required autocomplete="on"/>
+          </div>
+          
+          <div class="field-wrap">
+            <label>
+              Set A Password<span class="req">*</span>
+            </label>
+            <input type="password"required autocomplete="off"/>
+          </div>
+
+          
+          
+          <button type="submit" class="button button-block"/>Register</button>
+          
+          </form>
+  
+        </div>
+        
+        <div id="login">   
+          <h1>Welcome Back!</h1>
+          
+          <form action="/login" method="post">
+          
+            <div class="field-wrap">
+            <label>
+              Email Address<span class="req">*</span>
+            </label>
+            <input type="email"required autocomplete="off"/>
+          </div>
+          
+          <div class="field-wrap">
+            <label>
+              Password<span class="req">*</span>
+            </label>
+            <input type="password"required autocomplete="off"/>
+          </div>
+          
+          <p class="forgot"><a href="/forgotpassword">Forgot Password?</a></p>
+          
+          <button class="button button-block"/>Log In</button>
+          
+          </form>
+  
+        </div>
+        
+      </div><!-- tab-content -->
+      
+  </div> <!-- /form -->
+  
+  
+
+
+
+
+
+  <!-- ======= Footer ======= -->
+  <!-- <footer id="footer"> -->
+
+    <!-- <div class="footer-newsletter">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-6">
+            <h4>Join Our Newsletter</h4>
+            <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
+            <form action="" method="post">
+              <input type="email" name="email"><input type="submit" value="Subscribe">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+
+    <%- include('partials/footer') %>

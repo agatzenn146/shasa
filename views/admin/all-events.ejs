@@ -1,0 +1,94 @@
+
+<%- include('../partials/admin-header') %>
+<%- include('../partials/admin-sidebar') %>
+                  
+                     
+<!--                      
+                         <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-map-marker"></i><span class="hide-menu">Maps</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="map-vector.html">Map</a></li>
+                            </ul>
+                        </li>  -->
+                      
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </div>
+        <!-- End Left Sidebar  -->
+        <!-- Page wrapper  -->
+        <div class="page-wrapper">
+            <!-- Bread crumb -->
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-primary">Dashboard</h3> </div>
+                <div class="col-md-7 align-self-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item active">Events</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- End Bread crumb -->
+            <!-- Container fluid  -->
+            <div class="container-fluid">
+                <!-- Start Page Content -->
+                
+                
+                    <!-- main page content goes here -->
+                    <div class="all">
+                        <h3>All Posted Events
+                    </div>
+                      
+                        <div id="table1">
+                        <table class="table table-bordered " id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Event Name</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                        <th>Image</th>
+                                    <th>Operations</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Event Name</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                        <th>Image</th>
+                                    <th>Operations</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                               
+                                       
+                    <% events.forEach((event)=> { %>
+                    <tr>
+                        <td><%= event.name %></td>
+                        <td><%= event.evdate %></td>
+                        <td><%= event.time %></td>
+                         <td><%= event.image %></td>
+                        <td>
+                            <a class="btn btn-primary" href="/admin/edit-event/<%= event.id %>">Edit</a>
+                            <a class="btn btn-success" href="/admin/view-event/<%= event.id %>">View</a>
+                            <form style="display: inline;" action="/admin/delete/<%= event.id %>?_method=DELETE" method="POST">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button style="cursor: pointer;" type="submit" class="btn btn-danger ml-2">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+               <% }) %>
+                
+                    
+                                </tbody>
+                            </table>
+                            </div>
+                        
+
+                <div class="row">
+                  
+            <!-- End Container fluid   
+            footer --> 
+            <%- include('../partials/admin-footer') %>

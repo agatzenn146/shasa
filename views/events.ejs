@@ -1,0 +1,92 @@
+<%- include('partials/header') %>
+
+<!-- ======= Hero inner Section ======= -->
+<section id="hero-inner" class="d-flex align-items-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
+        <h1>Events</h1>
+      </div>
+      <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
+        <img src="/img/hero-img.png" class="img-fluid animated" alt="">
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Hero -->
+
+<!-- ======= More link Section ======= -->
+<section id="clients" class="clients section-bg">
+  <div class="container-fluid">
+    <div class="row bg-gray wow sliderInDown">
+      <div class="row" data-aos="zoom-in">
+        <div class="col-md-4">
+          <div class="icon-text">
+            <i class="fa fa-globe" aria-hidden="true"></i>
+            <a class="text-danger" href="#">Adventist World Christian Center</a>
+          </div>
+        </div>
+        <div class="col-md-4 bg-danger">
+          <div class="icon-text">
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <a class="text-white" href="#">Operation Depopulate Hell (ODH)</a>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="icon-text">
+            <i class="fa fa-book" aria-hidden="true"></i>
+            <a class="text-danger" href="#">Visit SHASA Faith Library</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Section -->
+
+<!-- Payment link -->
+<h1 class="h1-txt wow fadeInLeft ml-lg-3 ml-sm-2">
+  Please follow the Link To Pay:
+  <span class="txt-type" data-wait="3000" data-words='["Tithes", "Offering"]'></span>
+  <br>
+  <a class="btn btn-lg bg-danger text-light mt-3 wow slideInLeft">Pay Here</a>
+</h1>
+
+<!-- Events -->
+<div class="container-fluid mt-5">
+  <div class="row wow slideInLeft"></div>
+
+  <div class="row mb-5">
+    <% if (myEvents && myEvents.length > 0) { %>
+      <% myEvents.forEach(function(event) { %>
+        <div class="col-md-5 wow slideInRight">
+          <div class="">
+            <img src="/uploads/<%= event.image %>" alt="<%= event.name %>" class="card-img-top event-image">
+          </div>
+        </div>
+
+        <div class="col-md-7 wow slideInDown">
+          <div class="events">
+            <div class="event">
+              <ul class="seremon-list">
+                <li class="col-md-8">
+                  <h3><%= event.name %></h3>
+                  <p class="seremon-title"><%= event.description %></p>
+                  <div class="seremon-meta">
+                    <span><i class="fa fa-calendar"></i> <strong>Date:</strong> <%= event.evdate %></span>
+                    <span><i class="fa fa-clock"></i> <strong>Time:</strong> <%= event.time %></span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <p>No items found.</p>
+    <% } %>
+  </div>
+</div>
+
+<!-- Footer -->
+<%- include('partials/footer') %>

@@ -1,0 +1,37 @@
+<%- include('../partials/admin-header') %>
+<%- include('../partials/admin-sidebar') %>
+
+<div class="page-wrapper">
+  <div class="container-fluid">
+    <h1>Add Executive Details</h1>
+
+    <% if (success_msg) { %>
+      <p class="text-success"><%= success_msg %></p>
+    <% } %>
+
+    <% if (error_msg) { %>
+      <p class="text-danger"><%= error_msg %></p>
+    <% } %>
+
+    <form action="/admin/new-executives" method="POST" enctype="multipart/form-data">
+      <label>First Name</label>
+      <input type="text" name="first_name" required>
+
+      <label>Last Name</label>
+      <textarea name="last_name" required></textarea>
+
+      <label>Email</label>
+      <input type="email" name="email" required>
+
+      <label>Position</label>
+      <input type="text" name="Position" required>
+
+      <label>Image</label>
+      <input type="file" name="image" required>
+
+      <button type="submit">Add Executive</button>
+    </form>
+  </div>
+</div>
+
+<%- include('../partials/admin-footer') %>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= typeof title !== 'undefined' ? title : 'Southern Highlands Adventist Students Ministry - Welcome' %></title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/shasa.png">
+    <link href="/admin-css/style.css" rel="stylesheet">
+    <link href="/admin-css/lib/owl.carousel.min.css" rel="stylesheet" />
+    <link href="/admin-css/lib/owl.theme.default.min.css" rel="stylesheet" />
+</head>
+<body class="header-fix fix-sidebar">
+
+    <div id="main-wrapper">
+        <!-- INCLUDE HEADER -->
+        <%- include('partials/header') %>
+
+        <!-- INCLUDE SIDEBAR -->
+        <%- include('partials/sidebar') %>
+
+        <!-- PAGE CONTENT -->
+        <div class="page-wrapper">
+            <div class="container-fluid">
+                <%- body %>
+            </div>
+        </div>
+
+        <!-- INCLUDE FOOTER -->
+        <%- include('partials/footer') %>
+    </div>
+
+</body>
+</html>

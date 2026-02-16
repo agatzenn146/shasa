@@ -1,0 +1,24 @@
+<%- include('../partials/admin-header') %>
+
+<h2>New Message</h2>
+
+<% if (success_msg) { %>
+  <p style="color:green;"><%= success_msg %></p>
+<% } %>
+<% if (error_msg) { %>
+  <p style="color:red;"><%= error_msg %></p>
+<% } %>
+
+<form action="/admin/new" method="POST">
+  <div>
+    <label>Title</label>
+    <input type="text" name="title" required>
+  </div>
+  <div>
+    <label>Content</label>
+    <textarea name="content" required></textarea>
+  </div>
+  <button type="submit">Add Message</button>
+</form>
+
+<%- include('../partials/admin-footer') %>

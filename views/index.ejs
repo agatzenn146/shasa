@@ -1,0 +1,528 @@
+
+
+
+ <!-- nav here -->
+
+ <%- include('partials/header') %>
+ <head>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+
+ </head>
+ 
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex align-items-center">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
+          <h1>Come And Recieve Life Changing Miracles</h1>
+          <h2>Life Transforming Messages</h2>
+          <div class="d-flex justify-content-center justify-content-lg-start">
+            <a href="#clients" class="btn-get-started">Get Started</a>
+            <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="glightbox btn-watch-video"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
+          </div>
+        </div>
+        
+     
+       <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
+     
+         <img src="/img/hero-img.png" class="img-fluid animated" alt="">
+        </div>
+      </div>
+    </div>
+
+  </section><!-- End Hero -->
+
+  <main id="main">
+
+    <!-- ======= Clients Section ======= -->
+    <section id="clients" class="clients section-bg">
+      <div class="container-fluid">
+        <div class="row bg-gray wow sliderInDown">
+        <div class="row" data-aos="zoom-in">
+          <div class= "col-md-4"><div class="icon-text"><i class="fa fa-globe" aria-hidden="true"></i><a class="text-danger" href="#">Adventist World Christian Center</a></div> </div>
+          <div class= "col-md-4 bg-danger "><div class="icon-text"><i class="fa fa-star" aria-hidden="true"></i><a  class="text-white" href="#">Others</a></div> </div>
+          <div class= "col-md-4"><div class="icon-text"><i class="fa fa-book" aria-hidden="true"></i><a class="text-danger" href="/library"> Visit SHASA Faith Library</a></div> </div>
+  
+
+        </div>
+      </div>
+      </div>
+    </section><!-- End  Section -->
+
+
+<!-- type writer for tight and offering -->
+<h1 class="h1-txt wow fadeInLeft ml-lg-3 ml-sm-2">Please follow the Link To Pay:<span class="txt-type" data-wait="3000" data-words='["Tight", "Offering"]' > </span> <br>
+  <a class="btn btn-lg bg-danger text-light  mt-3 wow slideInLeft">Pay Here </a>
+  </h1>
+
+
+
+<!-- messages -->
+<div class="container-fluid mt-5">
+  <div class="row wow slideInLeft">
+      <!-- <div class="col-md-12 text-center"><h1>MESSAGES</h1></div> -->
+
+  </div>
+
+  <div class="row mb-5">
+    <div class="col-md-5 wow slideInRight">
+      <div class="">
+        <img src="/img/portfolio/portfolio-3.jpg" alt="img1" class="card-img-top img-fluid">
+        
+      </div>
+    </div> 
+
+
+    <div class="col-md-7 wow slideInDown">
+      <div class="events">
+        
+        <div class="event">
+         
+          <ul class="seremon-list">
+  
+            <li class="col-md-8">
+              <h3 class="seremon-title"><a href="#">Ministering the Word</a></h3>
+              <div class="seremon-meta">
+                <span><i class="fa fa-calendar"></i> <strong>Date:</strong> 05/04/2014</span>
+                <span><i class="fa fa-user"></i> <strong>Pastor:</strong> Danny David</span>
+              </div>
+              <!-- <a href="#" class="button secondary  btn btn-outline-danger"><img src="images/icon-headset.png" alt="" class="icon"> Audio record</a> -->
+              <a href="#" class="button secondary  btn btn-danger"><img src="/images/icon-film.png" alt=""> Watch</a>
+              <!-- <a href="#" class="button">See all latest seremons</a> -->
+            </li>
+            
+          </ul>
+  
+         
+        </div>
+      </div>
+    </div> 
+
+
+
+  </div>
+</div> 
+
+      
+<div class="container-fluid bc">
+  <div class="container pt-5 pb-5">
+    <div class="row inner-text">
+      <div class="col-md-6 text-light">
+        <h3 class="wow slideInLeft">MESSAGES</h3>
+        <h1 class="mt-4 wow slideInRight">Check All The Messages So Far</h1>
+        <a class="btn btn-lg bg-danger text-light mt-3 wow slideInLeft " href="/messages">View More </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+    <!-- ======= About Us Section ======= -->
+    <section id="about" class="about">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Latest Event</h2>
+        </div>
+
+        <div class="row content">
+          <div class="col-lg-7 ">
+                 <% if(churchActivities != '') { %>
+                 <% churchActivities.latest.forEach(function(latestEvent, index){ %>
+            <img class="event-img" src="/uploads/<%= latestEvent.image %>" alt= "<%= latestEvent.name %>" />
+              <% }) %>
+            <% } else { %>
+             <p>No items found.</p>
+            <% } %> 
+          </div>
+          <div class="col-lg-5 pt-4 pt-lg-0">
+            <p>
+            want to join us on our next event? follow to Check our series of Events for the week and for the month,
+            God Bless You .
+            </p>
+            <a href="/events" class="btn-learn-more">Explore</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <!-- End About Us Section -->
+
+
+
+
+    <!-- ======= Cta Section ======= -->
+    <section id="cta" class="cta">
+      <div class="container" data-aos="zoom-in">
+
+        <div class="row">
+          <div class="col-lg-9 text-center text-lg-start">
+            <h3>Testimonies</h3>
+            <p>check out the inspiring words for our Story Tellers</p>
+          </div>
+          <div class="col-lg-3 cta-btn-container text-center">
+            <a class="cta-btn align-middle" href="#">View All</a>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End Cta Section -->
+
+    <!-- ======= Portfolio Section ======= -->
+    <section id="portfolio" class="portfolio">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Library</h2>
+          <p>Check our library today for books of inspiration and powerful messages from God</p>
+        </div>
+
+        <!-- <ul id="portfolio-flters" class="d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
+          <li data-filter="*" class="filter-active">All</li>
+          <li data-filter=".filter-app">App</li>
+          <li data-filter=".filter-card">Card</li>
+          <li data-filter=".filter-web">Web</li>
+        </ul> -->
+
+        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+            <div class="portfolio-img"><img src="/img/portfolio/portfolio-1.jpg" class="img-fluid" alt=""></div>
+            <div class="portfolio-info">
+              <h4>Book 1 title</h4>
+              <p>Book Description</p>
+              <a href="/img/portfolio/portfolio-1.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="App 1"><i class="bx bx-plus"></i></a>
+              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+            <div class="portfolio-img"><img src="/img/portfolio/portfolio-2.jpg" class="img-fluid" alt=""></div>
+            <div class="portfolio-info">
+              <h4>Book 2 title</h4>
+              <p>Book Description</p>
+              <a href="/img/portfolio/portfolio-2.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Web 3"><i class="bx bx-plus"></i></a>
+              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+            <div class="portfolio-img"><img src="/img/portfolio/portfolio-3.jpg" class="img-fluid" alt=""></div>
+            <div class="portfolio-info">
+              <h4>Book 3 title</h4>
+              <p>Book Description</p>
+              <a href="/public/img/portfolio/portfolio-3.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="App 2"><i class="bx bx-plus"></i></a>
+              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
+            <div class="portfolio-img"><img src="/img/portfolio/portfolio-4.jpg" class="img-fluid" alt=""></div>
+            <div class="portfolio-info">
+              <h4>Book 4 title</h4>
+              <p>Book Description</p>
+              <a href="/img/portfolio/portfolio-4.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Card 2"><i class="bx bx-plus"></i></a>
+              <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+            </div>
+          </div>
+
+        
+
+      
+
+        </div>
+
+      </div>
+    </section><!-- End Portfolio Section -->
+
+    <!-- ======= Team Section ======= -->
+    <section id="team" class="team section-bg">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>About</h2>
+          <p>Southern Highlands Adventist Student Association (SHASA)
+
+The Southern Highlands Adventist Student Association (SHASA) is a faith-based student organization committed to nurturing spiritual growth, academic excellence, and positive leadership among students from the Southern Highlands Province. Grounded in Seventh-day Adventist Christian values, SHASA provides a supportive environment where students can grow intellectually, socially, and spiritually.
+
+Aim
+The aim of SHASA is to unite students through Christian fellowship, promote moral integrity, and encourage holistic development that reflects Adventist beliefs and service to humanity.
+
+Mission
+The mission of SHASA is to inspire students to live Christ-centered lives by fostering worship, service, leadership, and community outreach, while supporting academic success and strengthening unity among Adventist students both on campus and in society.</p>
+        </div>
+
+        <div class="row">
+
+          <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="100">
+            <div class="member d-flex align-items-start">
+              <div class="pic"><img src="/img/team/team-1.jpg" class="img-fluid" alt=""></div>
+              <div class="member-info">
+                <h4>Mr. Gideon Wingti</h4>
+                <span>President</span>
+                <p>Student at University of Goroka</p>
+                <div class="social">
+                  <a href=""><i class="ri-twitter-fill"></i></a>
+                  <a href=""><i class="ri-facebook-fill"></i></a>
+                  <a href=""><i class="ri-instagram-fill"></i></a>
+                  <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 mt-4 mt-lg-0" data-aos="zoom-in" data-aos-delay="200">
+            <div class="member d-flex align-items-start">
+              <div class="pic"><img src="/img/team/team-2.jpg" class="img-fluid" alt=""></div>
+              <div class="member-info">
+                <h4>Mr. Abbii Lumbirinidi</h4>
+                <span>Vise President</span>
+                <p>Student at Western Pacific University</p>
+                <div class="social">
+                  <a href=""><i class="ri-twitter-fill"></i></a>
+                  <a href=""><i class="ri-facebook-fill"></i></a>
+                  <a href=""><i class="ri-instagram-fill"></i></a>
+                  <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="col-lg-6 mt-4" data-aos="zoom-in" data-aos-delay="300">
+            <div class="member d-flex align-items-start">
+              <div class="pic"><img src="assets/img/team/team-3.jpg" class="img-fluid" alt=""></div>
+              <div class="member-info">
+                <h4>William Anderson</h4>
+                <span>CTO</span>
+                <p>Quisquam facilis cum velit laborum corrupti fuga rerum quia</p>
+                <div class="social">
+                  <a href=""><i class="ri-twitter-fill"></i></a>
+                  <a href=""><i class="ri-facebook-fill"></i></a>
+                  <a href=""><i class="ri-instagram-fill"></i></a>
+                  <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+          <!-- <div class="col-lg-6 mt-4" data-aos="zoom-in" data-aos-delay="400">
+            <div class="member d-flex align-items-start">
+              <div class="pic"><img src="assets/img/team/team-4.jpg" class="img-fluid" alt=""></div>
+              <div class="member-info">
+                <h4>Amanda Jepson</h4>
+                <span>Accountant</span>
+                <p>Dolorum tempora officiis odit laborum officiis et et accusamus</p>
+                <div class="social">
+                  <a href=""><i class="ri-twitter-fill"></i></a>
+                  <a href=""><i class="ri-facebook-fill"></i></a>
+                  <a href=""><i class="ri-instagram-fill"></i></a>
+                  <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+        </div>
+
+      </div>
+    </section><!-- End Team Section -->
+
+
+ 
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Contact</h2>
+          <p>For inquiries, membership details, or partnership opportunities, please feel free to contact the Southern Highlands Adventist Student Association (SHASA). We welcome communication from students, institutions, and community members who wish to connect, collaborate, or learn more about our activities and mission.</p>
+        </div>
+
+        <div class="row">
+
+          <div class="col-lg-5 d-flex align-items-stretch">
+            <div class="info">
+              <div class="address">
+                <i class="bi bi-geo-alt"></i>
+                <h4>Location:</h4>
+                <p>Wakwak Street, Mendi, Southern Highlands Province</p>
+              </div>
+
+              <div class="email">
+                <i class="bi bi-envelope"></i>
+                <h4>Email:</h4>
+                <p>agatzenn146@gmail.com</p>
+              </div>
+
+              <div class="phone">
+                <i class="bi bi-phone"></i>
+                <h4>Call:</h4>
+                <p>+675 72504628</p>
+              </div>
+              <iframe src="https://www.google.com/maps?q=-6.133538005651548, 143.65888983680742&z=15&output=embed" width="100%" height="290px" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+             
+            </div>
+
+          </div>
+
+          <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
+            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label for="name">Your Name</label>
+                  <input type="text" name="name" class="form-control" id="name" required>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="name">Your Email</label>
+                  <input type="email" class="form-control" name="email" id="email" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="name">Subject</label>
+                <input type="text" class="form-control" name="subject" id="subject" required>
+              </div>
+              <div class="form-group">
+                <label for="name">Message</label>
+                <textarea class="form-control" name="message" rows="10" required></textarea>
+              </div>
+              <div class="my-3">
+                <div class="loading">Loading</div>
+                <div class="error-message"></div>
+                <div class="sent-message">Your message has been sent. Thank you!</div>
+              </div>
+              <div class="text-center"><button type="submit">Send Message</button></div>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Contact Section -->
+
+  </main><!-- End #main -->
+
+
+  <div class="community">
+  <div class="row">
+    <!-- <div class="col-md-12 text-center"><h1>COMMUNITY</h1></div> -->
+
+  </div>
+
+
+      <div class="container instagram  mt-5">
+          <div class="row">
+            <div class="col-md-12 text-center"><h3>INSTAGRAM</h2></div>
+
+          </div>
+         <p>&nbsp;</p>
+      <!-- another img cats -->
+
+      <div class="row">
+        <div class="col-md-12 text-center"><p> Follow Southern Highlands Adventist Student Ministries on Instagram.
+           Inspiring people to reach their dreams and live their best life</p></div>
+
+      </div>
+      <div class="row mt-5">
+
+        <div class="col-md-3 wow slideInDown">
+          <div class="card">
+            <img src="/img/portfolio/portfolio-3.jpg" alt="img1" class="card-img-top img-fluid">
+            <div class="card-body">
+              <div class="card-heading"></div>
+              <p class="card-text">
+
+              </p>
+         
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-md-3 wow rotateInUpRight">
+          <div class="card">
+            <img src="/img/portfolio/portfolio-3.jpg" alt="img1" class="card-img-top img-fluid">
+            <div class="card-body">
+              <div class="card-heading"></div>
+              <p class="card-text">
+
+              </p>
+             
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3 wow slideInUp">
+          <div class="card">
+            <img src="/img/portfolio/portfolio-3.jpg" alt="img1" class="card-img-top img-fluid">
+            <div class="card-body">
+              <div class="card-heading"></div>
+              <p>
+
+              </p>
+              
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3 wow rotateInUpLeft">
+          <div class="card">
+            <img src="/img/portfolio/portfolio-3.jpg" alt="img1" class="card-img-top img-fluid">
+             <div class="card-body">
+              <div class="card-heading"></div>
+              <p class="card-text">
+
+              </p>
+              <!-- <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i>Add To Cart</a> -->
+            </div> 
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="card">
+           
+             <div class="card-body">
+      
+             
+              <a class="btn btn-outline-info text-bg-info text-light"><i class="fa fa-instagram" aria-hidden="true"></i>FOLLOW US</a>
+            </div> 
+          </div>
+        </div>
+
+
+      </div>
+  </div>
+  <p>&nbsp;</p>
+<div class="container facebook">
+  <div class="row">
+    <div class="col-md-12 text-center"><h3>ON FACEBOOK</h3></div>
+
+    <div class="col-md-12">
+      <div class="card">
+       
+         <class="card-body">
+        
+            <h5> Check Our Facebook Page
+               To View Our Latest Posts</h5>
+    
+          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente eius quos,<br/>
+             ex omnis, modi voluptate ducimus animi veritatis accusamus nulla <br/>
+            cupiditate consectetur facilis nam sed autem temporibus, voluptatum fugiat neque!
+          </p>
+         
+          <a class="btn btn-outline-info text-bg-info text-light"><i class="fa fa-instagram" aria-hidden="true"></i>VIEW POST</a>
+        </div> 
+      </div>
+    </div>
+    </div>
+    <p>&nbsp;</p>
+  </div>
+
+
+  <%- include('partials/footer') %>, my index.ejs where do i insert them

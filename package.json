@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/leo-mezie/sam-agbamuche-ministry.git"
+    "url": "git+https://github.com/agatzenn146/shasa.git"
   },
   "author": "leo",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/leo-mezie/sam-agbamuche-ministry/issues"
+    "url": "https://github.com/agatzenn146/shasa/issues"
   },
-  "homepage": "https://github.com/leo-mezie/sam-agbamuche-ministry#readme",
+  "homepage": "https://github.com/agatzenn146/shasa#readme",
   "dependencies": {
     "bcrypt": "^6.0.0",
     "body-parser": "^1.20.2",

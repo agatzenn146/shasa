@@ -50,16 +50,25 @@ h6 {
 }
 
 .text-section ul {
-  list-style: disc inside;
-  margin-bottom: 20px;
-  padding-left: 20px;
+  list-style: none; /* remove default bullets */
+  padding-left: 0;
+  margin-left: 0;
 }
 
 .text-section ul li {
+  position: relative;
+  padding-left: 25px;   /* space for custom bullet */
   margin-bottom: 10px;
-  font-size: 1rem;
 }
 
+.text-section ul li::before {
+  content: "•";          /* custom bullet symbol */
+  position: absolute;
+  left: 0;               /* align bullet to the left */
+  color: #1C2C6B;        /* bullet color */
+  font-size: 1.2rem;
+  line-height: 1;
+}
 
 
 /*--------------------------------------------------------------

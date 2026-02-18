@@ -26,6 +26,42 @@ h6 {
   font-family: "Jost", sans-serif;
 }
 
+
+.text-section {
+  font-family: 'Open Sans', sans-serif; /* same as other site text */
+  color: #333;
+  line-height: 1.7;
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.text-section h2 {
+  font-family: 'Montserrat', sans-serif; /* headings font */
+  font-weight: 600;
+  color: #1C2C6B;
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+
+.text-section p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.text-section ul {
+  list-style: disc inside;
+  margin-bottom: 20px;
+  padding-left: 20px;
+}
+
+.text-section ul li {
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+
+
 /*--------------------------------------------------------------
 # Preloader
 --------------------------------------------------------------*/

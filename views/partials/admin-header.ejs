@@ -1,0 +1,117 @@
+
+ <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/shasa.png">
+    <title><%= typeof title != 'undefined' ? title: 'Southern Highlands Adventist Students Ministry - Welcome' %></title>
+    <!-- Custom CSS -->
+    
+    <!-- <link href="/admin-css/lib/amchart/export.css" rel="stylesheet"> -->
+    <link href="/admin-css/lib/owl.carousel.min.css" rel="stylesheet" />
+    <link href="/admin-css/lib/owl.theme.default.min.css" rel="stylesheet" />
+    <link href="/admin-css/style.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+
+
+
+    <!-- <link href="/admin/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
+   
+</head>
+
+<!-- HEADER -->
+<div class="header">
+    <nav class="navbar top-navbar navbar-expand-md navbar-light">
+        <!-- Logo -->
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/admin/dashboard">
+                <b>
+                    <img src="/img/shasa.png" alt="homepage" class="dark-logo" />
+                </b>
+                <span class="logo-text">SHASA Admin</span>
+            </a>
+            <!-- Mobile toggle -->
+            <a class="nav-toggler d-block d-md-none text-muted" href="javascript:void(0)">
+                <i class="ti-menu"></i>
+            </a>
+        </div>
+
+        <!-- Navbar items -->
+        <div class="navbar-collapse">
+            <!-- Left side -->
+            <ul class="navbar-nav mr-auto mt-md-0">
+                <!-- Sidebar toggle -->
+                <li class="nav-item">
+                    <a class="nav-link sidebartoggle text-muted" href="javascript:void(0)">
+                        <i class="ti-menu"></i>
+                    </a>
+                </li>
+
+                <!-- Search bar -->
+                <li class="nav-item d-none d-md-block">
+                    <form class="app-search" action="/admin/search" method="GET">
+                        <input type="text" class="form-control" placeholder="Search & enter..." name="q">
+                        <a class="srh-btn"><i class="ti-search"></i></a>
+                    </form>
+                </li>
+            </ul>
+
+            <!-- Right side -->
+            <ul class="navbar-nav my-lg-0">
+                <!-- Notifications -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-muted" href="#" data-toggle="dropdown">
+                        <i class="fa fa-bell"></i>
+                        <span class="badge badge-pill badge-danger">3</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right animated slideInRight">
+                        <span class="dropdown-item">Notifications</span>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">New Event Added</a>
+                        <a class="dropdown-item" href="#">Message from User</a>
+                        <a class="dropdown-item" href="#">Server Rebooted</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item text-center" href="/admin/notifications">See all notifications</a>
+                    </div>
+                </li>
+
+                <!-- Messages -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-muted" href="#" data-toggle="dropdown">
+                        <i class="fa fa-envelope"></i>
+                        <span class="badge badge-pill badge-success">2</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right animated slideInRight">
+                        <span class="dropdown-item">Messages</span>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">John Doe: Hello Admin!</a>
+                        <a class="dropdown-item" href="#">Jane Smith: Event scheduled</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item text-center" href="/admin/messages">See all messages</a>
+                    </div>
+                </li>
+
+                <!-- User profile -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-muted" href="#" data-toggle="dropdown">
+                        <i class="fa fa-user"></i>
+                        <span><%= admin ? admin.email : 'Admin' %></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right animated slideInRight">
+                        <a class="dropdown-item" href="/admin/profile">Profile</a>
+                        <a class="dropdown-item" href="/admin/change-password">Change Password</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/admin/logout">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../config/db'); // MySQL connection pool
+const db = require('../config/db'); // PostgreSQL connection pool
 const path = require('path');
 const fileUpload = require('express-fileupload');
 
@@ -10,7 +10,7 @@ const fileUpload = require('express-fileupload');
 function isAdmin(req, res, next) {
   if (req.session && req.session.admin) return next();
   req.flash('error_msg', 'Please login first');
-  return res.redirect('/admin/login'); // redirect to login page
+  return res.redirect('/admin/login');
 }
 
 // ==========================
@@ -39,11 +39,11 @@ router.post('/login', (req, res) => {
   // Hard-coded admin
   if (email === 'admin@shasa.com' && password === 'admin123') {
     req.session.admin = { email, role: 'admin' };
-    return res.redirect('/admin/dashboard'); // ✅ redirect after login
+    return res.redirect('/admin/dashboard');
   }
 
   req.flash('error_msg', 'Invalid email or password');
-  res.redirect('/admin/login'); // redirect back to login page
+  res.redirect('/admin/login');
 });
 
 // ==========================
@@ -51,36 +51,36 @@ router.post('/login', (req, res) => {
 // ==========================
 router.get('/logout', (req, res) => {
   req.session.destroy(() => {
-    res.redirect('/admin/login'); // redirect to login after logout
+    res.redirect('/admin/login');
   });
 });
 
 // ==========================
 // Admin Dashboard
 // ==========================
-router.get('/dashboard', isAdmin, (req, res) => {
-  db.query('SELECT COUNT(*) AS totalEvents FROM events', (err, results) => {
-    if (err) {
-      console.error(err);
-      req.flash('error_msg', 'Failed to load dashboard');
-      return res.render('admin/dashboard', { totalEvents: 0, admin: req.session.admin });
-    }
-    res.render('admin/dashboard', { totalEvents: results[0].totalEvents, admin: req.session.admin });
-  });
+router.get('/dashboard', isAdmin, async (req, res) => {
+  try {
+    const result = await db.query('SELECT COUNT(*) AS "totalEvents" FROM events');
+    res.render('admin/dashboard', { totalEvents: result.rows[0].totalEvents, admin: req.session.admin });
+  } catch (err) {
+    console.error(err);
+    req.flash('error_msg', 'Failed to load dashboard');
+    res.render('admin/dashboard', { totalEvents: 0, admin: req.session.admin });
+  }
 });
 
 // ==========================
 // Show all events
 // ==========================
-router.get('/all-events', isAdmin, (req, res) => {
-  db.query('SELECT * FROM events ORDER BY evdate DESC', (err, results) => {
-    if (err) {
-      console.error(err);
-      req.flash('error_msg', 'Failed to load events');
-      return res.render('admin/all-events', { events: [], admin: req.session.admin });
-    }
-    res.render('admin/all-events', { events: results, admin: req.session.admin });
-  });
+router.get('/all-events', isAdmin, async (req, res) => {
+  try {
+    const result = await db.query('SELECT * FROM events ORDER BY evdate DESC');
+    res.render('admin/all-events', { events: result.rows, admin: req.session.admin });
+  } catch (err) {
+    console.error(err);
+    req.flash('error_msg', 'Failed to load events');
+    res.render('admin/all-events', { events: [], admin: req.session.admin });
+  }
 });
 
 // ==========================
@@ -101,23 +101,20 @@ router.post('/new-events', isAdmin, async (req, res) => {
 
     const { name, description, evdate, time } = req.body;
     const imageFile = req.files.image;
-    const uploadPath = path.join(__dirname, '../public/uploads/', imageFile.name);
+    const fileName = Date.now() + '_' + imageFile.name;
+    const uploadPath = path.join(__dirname, '../public/uploads/', fileName);
 
     await imageFile.mv(uploadPath);
 
-    db.query(
-      "INSERT INTO events (name, description, evdate, time, image) VALUES (?, ?, ?, ?, ?)",
-      [name, description, evdate, time, imageFile.name],
-      (err) => {
-        if (err) {
-          console.error(err);
-          return res.render('admin/new-events', { admin: req.session.admin, error_msg: 'Failed to add event' });
-        }
+    const sql = `
+      INSERT INTO events (name, description, evdate, time, image)
+      VALUES ($1, $2, $3, $4, $5)
+    `;
 
-        req.flash('success_msg', "Event added successfully!");
-        res.redirect('/admin/all-events'); // redirect to show all events
-      }
-    );
+    await db.query(sql, [name, description, evdate, time, fileName]);
+
+    req.flash('success_msg', 'Event added successfully!');
+    res.redirect('/admin/all-events');
   } catch (err) {
     console.error(err);
     res.render('admin/new-events', { admin: req.session.admin, error_msg: 'Something went wrong' });
@@ -127,14 +124,19 @@ router.post('/new-events', isAdmin, async (req, res) => {
 // ==========================
 // Edit Event Form
 // ==========================
-router.get('/edit-event/:id', isAdmin, (req, res) => {
-  db.query('SELECT * FROM events WHERE id=?', [req.params.id], (err, results) => {
-    if (err || results.length === 0) {
+router.get('/edit-event/:id', isAdmin, async (req, res) => {
+  try {
+    const result = await db.query('SELECT * FROM events WHERE id=$1', [req.params.id]);
+    if (result.rows.length === 0) {
       req.flash('error_msg', 'Event not found');
       return res.redirect('/admin/all-events');
     }
-    res.render('admin/edit-event', { event: results[0], admin: req.session.admin, error_msg: null });
-  });
+    res.render('admin/edit-event', { event: result.rows[0], admin: req.session.admin, error_msg: null });
+  } catch (err) {
+    console.error(err);
+    req.flash('error_msg', 'Something went wrong');
+    res.redirect('/admin/all-events');
+  }
 });
 
 // ==========================
@@ -147,24 +149,20 @@ router.post('/edit-event/:id', isAdmin, async (req, res) => {
 
     if (req.files && req.files.image) {
       const imageFile = req.files.image;
-      const uploadPath = path.join(__dirname, '../public/uploads/', imageFile.name);
+      const fileName = Date.now() + '_' + imageFile.name;
+      const uploadPath = path.join(__dirname, '../public/uploads/', fileName);
       await imageFile.mv(uploadPath);
-      image = imageFile.name;
+      image = fileName;
     }
 
-    db.query(
-      'UPDATE events SET name=?, description=?, evdate=?, time=?, image=? WHERE id=?',
-      [name, description, evdate, time, image, req.params.id],
-      (err) => {
-        if (err) {
-          console.error(err);
-          req.flash('error_msg', 'Failed to update event');
-          return res.redirect('/admin/all-events');
-        }
-        req.flash('success_msg', 'Event updated successfully');
-        res.redirect('/admin/all-events');
-      }
-    );
+    const sql = `
+      UPDATE events SET name=$1, description=$2, evdate=$3, time=$4, image=$5
+      WHERE id=$6
+    `;
+    await db.query(sql, [name, description, evdate, time, image, req.params.id]);
+
+    req.flash('success_msg', 'Event updated successfully');
+    res.redirect('/admin/all-events');
   } catch (err) {
     console.error(err);
     req.flash('error_msg', 'Something went wrong');
@@ -175,30 +173,30 @@ router.post('/edit-event/:id', isAdmin, async (req, res) => {
 // ==========================
 // Delete Event
 // ==========================
-router.post('/delete-event/:id', isAdmin, (req, res) => {
-  db.query('DELETE FROM events WHERE id=?', [req.params.id], (err) => {
-    if (err) {
-      console.error(err);
-      req.flash('error_msg', 'Failed to delete event');
-      return res.redirect('/admin/all-events');
-    }
+router.post('/delete-event/:id', isAdmin, async (req, res) => {
+  try {
+    await db.query('DELETE FROM events WHERE id=$1', [req.params.id]);
     req.flash('success_msg', 'Event deleted successfully');
     res.redirect('/admin/all-events');
-  });
+  } catch (err) {
+    console.error(err);
+    req.flash('error_msg', 'Failed to delete event');
+    res.redirect('/admin/all-events');
+  }
 });
 
-
-
+// ==========================
 // Show all messages
-router.get('/all-messages', isAdmin, (req, res) => {
-    db.query('SELECT * FROM messages ORDER BY created_at DESC', (err, results) => {
-        if (err) {
-            console.error(err);
-            req.flash('error_msg', 'Failed to load messages');
-            return res.render('admin/all-messages', { messages: [] });
-        }
-        res.render('admin/all-messages', { messages: results });
-    });
+// ==========================
+router.get('/all-messages', isAdmin, async (req, res) => {
+  try {
+    const result = await db.query('SELECT * FROM messages ORDER BY created_at DESC');
+    res.render('admin/all-messages', { messages: result.rows, admin: req.session.admin });
+  } catch (err) {
+    console.error(err);
+    req.flash('error_msg', 'Failed to load messages');
+    res.render('admin/all-messages', { messages: [], admin: req.session.admin });
+  }
 });
 
 // ==========================
@@ -208,13 +206,9 @@ router.get('/new-messages', isAdmin, (req, res) => {
   res.render('admin/new-messages', { admin: req.session.admin, error_msg: null });
 });
 
-
-
 // ==========================
 // Add New Message
 // ==========================
-
-
 router.post('/new-messages', isAdmin, async (req, res) => {
   try {
     const { title, designation, residence } = req.body;
@@ -227,25 +221,17 @@ router.post('/new-messages', isAdmin, async (req, res) => {
     const imageFile = req.files.image;
     const fileName = Date.now() + '_' + imageFile.name;
     const uploadPath = path.join(__dirname, '../public/uploads/', fileName);
-
     await imageFile.mv(uploadPath);
 
     const sql = `
       INSERT INTO messages (title, designation, residence, image)
-      VALUES (?, ?, ?, ?)
+      VALUES ($1, $2, $3, $4)
     `;
 
-    db.query(sql, [title, designation, residence, fileName], (err) => {
-      if (err) {
-        console.error(err);
-        req.flash('error_msg', 'Failed to save message');
-        return res.redirect('/admin/new-messages');
-      }
+    await db.query(sql, [title, designation, residence, fileName]);
 
-      req.flash('success_msg', 'Message added successfully');
-      res.redirect('/admin/all-messages');
-    });
-
+    req.flash('success_msg', 'Message added successfully');
+    res.redirect('/admin/all-messages');
   } catch (err) {
     console.error(err);
     req.flash('error_msg', 'Something went wrong');
@@ -253,28 +239,18 @@ router.post('/new-messages', isAdmin, async (req, res) => {
   }
 });
 
-// Show all Executives
-
-
 // ==========================
 // Show all Executives
 // ==========================
-router.get('/all-executives', isAdmin, (req, res) => {
-  db.query('SELECT * FROM executives ORDER BY executive_id DESC', (err, results) => {
-    if (err) {
-      console.error(err);
-      req.flash('error_msg', 'Failed to load executives');
-      return res.render('admin/all-executives', {
-        executives: [],
-        admin: req.session.admin
-      });
-    }
-
-    res.render('admin/all-executives', {
-      executives: results,
-      admin: req.session.admin
-    });
-  });
+router.get('/all-executives', isAdmin, async (req, res) => {
+  try {
+    const result = await db.query('SELECT * FROM executives ORDER BY id DESC');
+    res.render('admin/all-executives', { executives: result.rows, admin: req.session.admin });
+  } catch (err) {
+    console.error(err);
+    req.flash('error_msg', 'Failed to load executives');
+    res.render('admin/all-executives', { executives: [], admin: req.session.admin });
+  }
 });
 
 // ==========================
@@ -299,25 +275,17 @@ router.post('/new-executives', isAdmin, async (req, res) => {
     const imageFile = req.files.image;
     const fileName = Date.now() + '_' + imageFile.name;
     const uploadPath = path.join(__dirname, '../public/uploads/', fileName);
-
     await imageFile.mv(uploadPath);
 
     const sql = `
       INSERT INTO executives (first_name, last_name, email, position, photo)
-      VALUES (?, ?, ?, ?, ?)
+      VALUES ($1, $2, $3, $4, $5)
     `;
 
-    db.query(sql, [first_name, last_name, email, phone_number, position, photo], (err) => {
-      if (err) {
-        console.error(err);
-        req.flash('error_msg', 'Failed to save executive');
-        return res.redirect('/admin/new-executives');
-      }
+    await db.query(sql, [first_name, last_name, email, position, fileName]);
 
-      req.flash('success_msg', 'Executive added successfully');
-      res.redirect('/admin/all-executives');
-    });
-
+    req.flash('success_msg', 'Executive added successfully');
+    res.redirect('/admin/all-executives');
   } catch (err) {
     console.error(err);
     req.flash('error_msg', 'Something went wrong');
@@ -328,14 +296,19 @@ router.post('/new-executives', isAdmin, async (req, res) => {
 // ==========================
 // Edit Executive Form
 // ==========================
-router.get('/edit-executive/:id', isAdmin, (req, res) => {
-  db.query('SELECT * FROM executives WHERE id=?', [req.params.id], (err, results) => {
-    if (err || results.length === 0) {
+router.get('/edit-executive/:id', isAdmin, async (req, res) => {
+  try {
+    const result = await db.query('SELECT * FROM executives WHERE id=$1', [req.params.id]);
+    if (result.rows.length === 0) {
       req.flash('error_msg', 'Executive not found');
       return res.redirect('/admin/all-executives');
     }
-    res.render('admin/edit-executive', { executive: results[0], admin: req.session.admin });
-  });
+    res.render('admin/edit-executive', { executive: result.rows[0], admin: req.session.admin });
+  } catch (err) {
+    console.error(err);
+    req.flash('error_msg', 'Something went wrong');
+    res.redirect('/admin/all-executives');
+  }
 });
 
 // ==========================
@@ -348,28 +321,22 @@ router.post('/edit-executive/:id', isAdmin, async (req, res) => {
 
     if (req.files && req.files.image) {
       const imageFile = req.files.image;
-      const uploadPath = path.join(__dirname, '../public/uploads/', imageFile.name);
+      const fileName = Date.now() + '_' + imageFile.name;
+      const uploadPath = path.join(__dirname, '../public/uploads/', fileName);
       await imageFile.mv(uploadPath);
-      photo = imageFile.name;
+      photo = fileName;
     }
 
     const sql = `
       UPDATE executives
-      SET first_name=?, last_name=?, email=?, position=?, photo=?
-      WHERE id=?
+      SET first_name=$1, last_name=$2, email=$3, position=$4, photo=$5
+      WHERE id=$6
     `;
 
-    db.query(sql, [first_name, last_name, email, position, photo, req.params.id], (err) => {
-      if (err) {
-        console.error(err);
-        req.flash('error_msg', 'Failed to update executive');
-        return res.redirect('/admin/all-executives');
-      }
+    await db.query(sql, [first_name, last_name, email, position, photo, req.params.id]);
 
-      req.flash('success_msg', 'Executive updated successfully');
-      res.redirect('/admin/all-executives');
-    });
-
+    req.flash('success_msg', 'Executive updated successfully');
+    res.redirect('/admin/all-executives');
   } catch (err) {
     console.error(err);
     req.flash('error_msg', 'Something went wrong');
@@ -380,18 +347,16 @@ router.post('/edit-executive/:id', isAdmin, async (req, res) => {
 // ==========================
 // Delete Executive
 // ==========================
-router.post('/delete-executive/:id', isAdmin, (req, res) => {
-  db.query('DELETE FROM executives WHERE id=?', [req.params.id], (err) => {
-    if (err) {
-      console.error(err);
-      req.flash('error_msg', 'Failed to delete executive');
-      return res.redirect('/admin/all-executives');
-    }
-
+router.post('/delete-executive/:id', isAdmin, async (req, res) => {
+  try {
+    await db.query('DELETE FROM executives WHERE id=$1', [req.params.id]);
     req.flash('success_msg', 'Executive deleted successfully');
     res.redirect('/admin/all-executives');
-  });
+  } catch (err) {
+    console.error(err);
+    req.flash('error_msg', 'Failed to delete executive');
+    res.redirect('/admin/all-executives');
+  }
 });
-
 
 module.exports = router;

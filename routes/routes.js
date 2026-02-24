@@ -1,18 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../config/db'); // MySQL connection
+const db = require('../config/db'); // PostgreSQL connection pool
 
 /* =====================
    HOME PAGE
 ===================== */
-router.get('/', (req, res) => {
-  db.query('SELECT * FROM events ORDER BY evdate DESC LIMIT 5', (err, results) => {
-    if (err) {
-      console.error(err);
-      return res.render('index', { churchActivities: { latest: [] } });
-    }
-    res.render('index', { churchActivities: { latest: results } });
-  });
+router.get('/', async (req, res) => {
+  try {
+    const result = await db.query('SELECT * FROM events ORDER BY evdate DESC LIMIT 5');
+    res.render('index', { churchActivities: { latest: result.rows } });
+  } catch (err) {
+    console.error(err);
+    res.render('index', { churchActivities: { latest: [] } });
+  }
 });
 
 /* =====================
@@ -29,7 +29,7 @@ router.get('/contact', (req, res) => {
   res.render('contact');
 });
 
-router.post('/contact', (req, res) => {
+router.post('/contact', async (req, res) => {
   const { name, email, subject, message } = req.body;
 
   if (!name || !email || !subject || !message) {
@@ -37,46 +37,44 @@ router.post('/contact', (req, res) => {
     return res.redirect('/contact');
   }
 
-  // Save contact message in database
-  db.query(
-    'INSERT INTO messages (name, email, message) VALUES (?, ?, ?)',
-    [name, email, message],
-    (err) => {
-      if (err) {
-        console.error(err);
-        req.flash('error_msg', 'Failed to send message');
-        return res.redirect('/contact');
-      }
-      req.flash('success_msg', 'Your message has been sent. Thank you!');
-      res.redirect('/contact');
-    }
-  );
+  try {
+    await db.query(
+      'INSERT INTO messages (name, email, subject, message) VALUES ($1, $2, $3, $4)',
+      [name, email, subject, message]
+    );
+    req.flash('success_msg', 'Your message has been sent. Thank you!');
+    res.redirect('/contact');
+  } catch (err) {
+    console.error(err);
+    req.flash('error_msg', 'Failed to send message');
+    res.redirect('/contact');
+  }
 });
 
 /* =====================
    MESSAGES PAGE (USER)
 ===================== */
-router.get('/messages', (req, res) => {
-  db.query('SELECT * FROM messages ORDER BY created_at DESC', (err, results) => {
-    if (err) {
-      console.error(err);
-      return res.render('messages', { messages: [] });
-    }
-    res.render('messages', { messages: results });
-  });
+router.get('/messages', async (req, res) => {
+  try {
+    const result = await db.query('SELECT * FROM messages ORDER BY created_at DESC');
+    res.render('messages', { messages: result.rows });
+  } catch (err) {
+    console.error(err);
+    res.render('messages', { messages: [] });
+  }
 });
 
 /* =====================
    EVENTS PAGE (USER)
 ===================== */
-router.get('/events', (req, res) => {
-  db.query('SELECT * FROM events ORDER BY evdate ASC', (err, results) => {
-    if (err) {
-      console.error(err);
-      return res.render('events', { myEvents: [] });
-    }
-    res.render('events', { myEvents: results });
-  });
+router.get('/events', async (req, res) => {
+  try {
+    const result = await db.query('SELECT * FROM events ORDER BY evdate ASC');
+    res.render('events', { myEvents: result.rows });
+  } catch (err) {
+    console.error(err);
+    res.render('events', { myEvents: [] });
+  }
 });
 
 /* =====================
@@ -93,7 +91,7 @@ router.get('/login', (req, res) => {
 });
 
 // Register POST
-router.post('/register', (req, res) => {
+router.post('/register', async (req, res) => {
   const { name, email, password } = req.body;
 
   if (!name || !email || !password) {
@@ -101,23 +99,22 @@ router.post('/register', (req, res) => {
     return res.redirect('/register');
   }
 
-  db.query(
-    'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
-    [name, email, password],
-    (err) => {
-      if (err) {
-        console.error(err);
-        req.flash('error_msg', 'Error registering user');
-        return res.redirect('/register');
-      }
-      req.flash('success_msg', 'Registration successful! You can now login.');
-      res.redirect('/login');
-    }
-  );
+  try {
+    await db.query(
+      'INSERT INTO users (name, email, password) VALUES ($1, $2, $3)',
+      [name, email, password]
+    );
+    req.flash('success_msg', 'Registration successful! You can now login.');
+    res.redirect('/login');
+  } catch (err) {
+    console.error(err);
+    req.flash('error_msg', 'Error registering user');
+    res.redirect('/register');
+  }
 });
 
 // Login POST
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -125,26 +122,25 @@ router.post('/login', (req, res) => {
     return res.redirect('/login');
   }
 
-  db.query(
-    'SELECT * FROM users WHERE email=? AND password=?',
-    [email, password],
-    (err, results) => {
-      if (err) {
-        console.error(err);
-        req.flash('error_msg', 'Login error');
-        return res.redirect('/login');
-      }
+  try {
+    const result = await db.query(
+      'SELECT * FROM users WHERE email=$1 AND password=$2',
+      [email, password]
+    );
 
-      if (results.length === 0) {
-        req.flash('error_msg', 'Invalid email or password');
-        return res.redirect('/login');
-      }
-
-      req.session.user = results[0]; // store user in session
-      req.flash('success_msg', 'Login successful!');
-      res.redirect('/');
+    if (result.rows.length === 0) {
+      req.flash('error_msg', 'Invalid email or password');
+      return res.redirect('/login');
     }
-  );
+
+    req.session.user = result.rows[0]; // store user in session
+    req.flash('success_msg', 'Login successful!');
+    res.redirect('/');
+  } catch (err) {
+    console.error(err);
+    req.flash('error_msg', 'Login error');
+    res.redirect('/login');
+  }
 });
 
 module.exports = router;

@@ -1,19 +1,15 @@
-const mysql = require('mysql2');
-require('dotenv').config(); // make sure this is at the top
+const { Pool } = require('pg');
 
-const db = mysql.createConnection({
-  host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '',  // XAMPP default
-  database: process.env.DB_NAME || 'shasa_db'
-});
-
-db.connect(err => {
-  if (err) {
-    console.error('MySQL connection failed:', err);
-  } else {
-    console.log('MySQL connected');
+// Use DATABASE_URL from Render environment variables
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL, // DATABASE_URL set in Render
+  ssl: {
+    rejectUnauthorized: false // required for Render PostgreSQL
   }
 });
 
-module.exports = db;
+pool.connect()
+  .then(() => console.log('PostgreSQL connected!'))
+  .catch(err => console.error('PostgreSQL connection failed:', err));
+
+module.exports = pool;
